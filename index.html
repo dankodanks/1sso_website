@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>1SSO — The Indie Developer Toolbox. One Platform. One API Key.</title>
+  <meta name="description" content="Stop wrestling with 25-line .env files. One 1SSO key unlocks authentication, a managed database, storage, and thousands of APIs. Built for indie devs and vibe coders using Lovable, Bolt, and Cursor." />
+  <meta name="theme-color" content="#141428" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="1SSO home">
+      <svg class="brand__icon" viewBox="0 0 16 16" aria-hidden="true">
+        <g fill="#ff9a47">
+          <path d="M3 3h4v1H3zM2 4h1v3H2zM7 4h1v3H7zM3 7h4v1H3z"/>
+          <path d="M8 5h7v2H8z"/>
+          <path d="M12 7h1v2h-1zM14 7h1v2h-1z"/>
+        </g>
+      </svg>
+      <span class="brand__name">1SSO</span>
+    </a>
+
+    <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav__links" id="nav-links" aria-label="Primary">
+      <a href="#why">Why 1SSO</a>
+      <a href="#toolbox">Toolbox</a>
+      <a href="#apis">APIs</a>
+      <a href="#backend">Backend</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#quickstart">Docs</a>
+      <a class="btn-hop" href="#get-key">Get your key <span aria-hidden="true">→</span></a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <span class="spark spark--1" aria-hidden="true">✦</span>
+      <span class="spark spark--2" aria-hidden="true">✦</span>
+      <span class="spark spark--3" aria-hidden="true">+</span>
+
+      <div class="hero__top">
+      <div class="hero__copy">
+        <p class="eyebrow">// the indie developer toolbox</p>
+        <h1 class="headline">
+          <span class="headline__a">1SSO.</span>
+          <span class="headline__b">One platform.<br />One API key.</span>
+        </h1>
+        <p class="lede">
+          Stop wasting hours hunting for API keys and wrestling with messy <code>.env</code> files.
+          Plug a single line of code into Lovable, Bolt, or Cursor to unlock authentication,
+          databases, storage, and thousands of APIs instantly.
+        </p>
+
+        <div class="cta-row" id="get-key">
+          <a class="cta" href="#pricing">Get Your 1SSO Key <span aria-hidden="true">↗</span></a>
+          <a class="cta cta--ghost" href="#toolbox">Explore the Toolbox</a>
+        </div>
+
+        <div class="badges" aria-label="Works with">
+          <span class="badges__label">works with</span>
+          <ul class="badges__list">
+            <li class="badge"><span class="badge__logo badge__logo--lovable" aria-hidden="true">♥</span> Lovable</li>
+            <li class="badge"><span class="badge__logo badge__logo--bolt" aria-hidden="true">⚡</span> Bolt</li>
+            <li class="badge"><span class="badge__logo badge__logo--cursor" aria-hidden="true">▲</span> Cursor</li>
+            <li class="badge"><span class="badge__logo badge__logo--vscode" aria-hidden="true">&lt;/&gt;</span> VS Code</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hero__art" aria-label="An indie developer coding at night in a cozy room with two sleeping cats">
+        <div class="scene" id="scene">
+          <img src="assets/room-hd.jpg" alt="An indie developer coding at a glowing desk at night, with a cat curled up on the bed and another sleeping beside the PC." width="1024" height="899" fetchpriority="high" />
+          <div class="glow" aria-hidden="true"></div>
+          <div class="dark" aria-hidden="true"></div>
+
+          <!-- easter egg hotspots -->
+          <button class="spot spot--bedcat" data-egg="bedcat" aria-label="Pet the cat on the bed"><span class="bubble">mrrrow~ ♥</span></button>
+          <button class="spot spot--floorcat" data-egg="floorcat" aria-label="Wake the cat on the floor"><span class="bubble">zzz… 5 more minutes</span></button>
+          <button class="spot spot--lamp" data-egg="lamp" aria-label="Toggle the desk lamp"><span class="bubble">click: lights</span></button>
+          <button class="spot spot--mug" data-egg="mug" aria-label="Sip the coffee"><span class="bubble">☕ +10 focus</span><i class="steam"></i><i class="steam"></i><i class="steam"></i></button>
+          <button class="spot spot--monitor" data-egg="monitor" aria-label="Check the connection"><span class="bubble">1SSO_API_KEY ✔</span></button>
+          <button class="spot spot--window" data-egg="window" aria-label="Look out the window"><span class="bubble">make a wish ✦</span></button>
+          <button class="spot spot--folder" data-egg="folder" aria-label="Read the sticky note"><span class="bubble">.env (1 line)</span></button>
+        </div>
+        <p class="hint" aria-hidden="true">psst… the cats like attention</p>
+      </div>
+      </div>
+
+      <!-- .env comparison -->
+      <div class="wrap">
+        <div class="envcmp" id="envcmp">
+          <div class="envcmp__pane envcmp__pane--before" aria-label="A messy 25-line .env file">
+            <div class="pane__bar">
+              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="pane__title">.env <em>— the old way</em></span>
+              <span class="pane__tag pane__tag--bad">25 lines</span>
+            </div>
+            <pre class="envcode envcode--messy" id="messy" aria-hidden="true"></pre>
+            <p class="sr-only">A cluttered .env file with around 25 separate secrets for Google, Spotify, YouTube, Supabase, OpenAI and more.</p>
+          </div>
+
+          <div class="envcmp__arrow" aria-hidden="true">
+            <span class="arrow__glyph">→</span>
+            <button type="button" class="arrow__replay" id="replay" aria-label="Replay animation">↻ replay</button>
+          </div>
+
+          <div class="envcmp__pane envcmp__pane--after" aria-label="A single-line .env file with a 1SSO key">
+            <div class="pane__bar">
+              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="pane__title">.env <em>— the 1SSO way</em></span>
+              <span class="pane__tag pane__tag--good">1 line</span>
+            </div>
+            <div class="after__body">
+              <div class="keyline">
+                <code class="keyline__code"><span class="k">1SSO_API_KEY</span><span class="eq">=</span><span class="v">1sso_live_98a7s6d...</span></code>
+                <button type="button" class="copy" data-copy="1SSO_API_KEY=1sso_live_98a7s6d..." aria-label="Copy .env line">copy</button>
+              </div>
+              <ul class="after__list">
+                <li><span class="tick">✔</span> Auth</li>
+                <li><span class="tick">✔</span> Database &amp; storage</li>
+                <li><span class="tick">✔</span> Google, Spotify, YouTube, Maps…</li>
+                <li><span class="tick">✔</span> Your own OpenAI / GA / Supabase keys</li>
+              </ul>
+              <p class="after__note">Everything else lives in your dashboard. Not in your repo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROBLEM vs SOLUTION ================= -->
+    <section class="section" id="why">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="eyebrow">// the problem vs. the solution</p>
+          <h2>Setup shouldn't take longer than the app.</h2>
+        </header>
+
+        <div class="versus">
+          <article class="vs vs--old">
+            <p class="vs__label">The old way</p>
+            <h3>25 lines of keyboard mash.</h3>
+            <p>
+              You want to build a simple app, and suddenly you're managing a wall of
+              gibberish in your <code>.env</code>. Setting up Google Login, YouTube, Spotify,
+              Maps, authentication, and a database takes longer than building the actual app.
+            </p>
+            <ul class="vs__list">
+              <li><span class="x">✕</span> A dev console per service</li>
+              <li><span class="x">✕</span> Secrets copy-pasted into every project</li>
+              <li><span class="x">✕</span> Sharing a repo means sharing a credentials file</li>
+            </ul>
+          </article>
+
+          <article class="vs vs--new">
+            <p class="vs__label">The 1SSO way</p>
+            <h3>One key. Toggle the rest.</h3>
+            <p>
+              Drop one API key into your <code>.env</code> file. Toggle on the APIs and backend
+              tools you need inside your 1SSO dashboard, and start building. Sharing a project
+              with a collaborator? Send them one line instead of a massive credentials file.
+            </p>
+            <ul class="vs__list">
+              <li><span class="ok">✔</span> One dashboard for everything</li>
+              <li><span class="ok">✔</span> Switch tools on without touching code</li>
+              <li><span class="ok">✔</span> Collaborators get one line, not a vault</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TOOLBOX ================= -->
+    <section class="section section--alt" id="toolbox">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="eyebrow">// the toolbox</p>
+          <h2>Everything in the box. Nothing to configure.</h2>
+          <p class="section__sub">Four tools, one key. Use what you need, ignore the rest.</p>
+        </header>
+
+        <div class="features">
+          <article class="feature">
+            <div class="feature__icon" aria-hidden="true">🔐</div>
+            <h3>Built-In Authentication</h3>
+            <p>Instant user login and single sign-on right out of the box. No external auth setup required.</p>
+            <span class="feature__tag">included in Starter</span>
+          </article>
+
+          <article class="feature">
+            <div class="feature__icon" aria-hidden="true">🔌</div>
+            <h3>Plug-and-Play API Relay</h3>
+            <p>Instant access to thousands of popular APIs (Google Maps, YouTube, Spotify, Google Play, Formula 1, and more) through a single unified gateway.</p>
+            <span class="feature__tag">included in Starter</span>
+          </article>
+
+          <article class="feature">
+            <div class="feature__icon" aria-hidden="true">🗝️</div>
+            <h3>1-Click Private Connectors</h3>
+            <p>Need your own OpenAI/ChatGPT, Google Analytics, or Supabase keys? Paste them into your 1SSO backend once and keep your local project clean.</p>
+            <span class="feature__tag">included in Starter</span>
+          </article>
+
+          <article class="feature feature--hot">
+            <div class="feature__icon" aria-hidden="true">🗄️</div>
+            <h3>Zero-Config Backend <small>(managed Supabase)</small></h3>
+            <p>Don't know what "edge functions" or "bucket storage" mean? Just tell us what your app does, like <q>my users need to upload profile photos</q>, and we provision the database and storage behind the scenes.</p>
+            <span class="feature__tag feature__tag--addon">add-on</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= API DIRECTORY ================= -->
+    <section class="section" id="apis">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="eyebrow">// api directory</p>
+          <h2>See what's inside the box.</h2>
+          <p class="section__sub">A peek at the catalog. Search it, flip a few on, and notice your <code>.env</code> doesn't change.</p>
+        </header>
+
+        <div class="dir">
+          <div class="dir__bar">
+            <label class="search">
+              <span class="search__icon" aria-hidden="true">⌕</span>
+              <span class="sr-only">Search APIs</span>
+              <input id="api-search" type="search" placeholder="Search APIs… try “maps” or “music”" autocomplete="off" />
+            </label>
+            <div class="chips" id="api-chips" role="group" aria-label="Filter by category">
+              <button type="button" class="chip is-active" data-cat="all">All</button>
+              <button type="button" class="chip" data-cat="google">Google</button>
+              <button type="button" class="chip" data-cat="media">Media</button>
+              <button type="button" class="chip" data-cat="data">Data</button>
+              <button type="button" class="chip" data-cat="ai">AI &amp; Dev</button>
+            </div>
+          </div>
+
+          <ul class="apigrid" id="api-grid"></ul>
+          <p class="dir__empty" id="api-empty" hidden>No match yet. There are thousands more in the full directory, and we're adding more all the time.</p>
+
+          <div class="dir__foot">
+            <p id="api-status" aria-live="polite"><b>0</b> toggled on · <span class="ok">your .env is still 1 line</span></p>
+            <code class="dir__line">1SSO_API_KEY=1sso_live_98a7s6d...</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BACKEND CONFIGURATOR ================= -->
+    <section class="section section--alt" id="backend">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="eyebrow">// zero-config backend</p>
+          <h2>Say what your app does. Skip the jargon.</h2>
+          <p class="section__sub">Pick by use-case, or just describe it. We handle the tables, buckets, and functions.</p>
+        </header>
+
+        <div class="config" aria-label="Plain-English backend configurator preview">
+          <div class="config__bar">
+            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="pane__title">1sso.dev / my-app / backend</span>
+            <span class="pane__tag pane__tag--mock">preview</span>
+          </div>
+
+          <div class="config__body">
+            <div class="config__left">
+              <label class="config__label" for="describe">What does your app do?</label>
+              <div class="describe">
+                <input id="describe" type="text" value="My users need to upload profile photos" autocomplete="off" spellcheck="false" />
+              </div>
+
+              <p class="config__label">…or just tick what you need</p>
+              <ul class="usecases" id="usecases">
+                <li><button type="button" class="usecase" data-uc="login"><span class="usecase__box"></span><span><b>Let people sign in</b><small>accounts, logins, “forgot password”</small></span></button></li>
+                <li><button type="button" class="usecase" data-uc="data"><span class="usecase__box"></span><span><b>Save user data</b><small>profiles, settings, anything you store</small></span></button></li>
+                <li><button type="button" class="usecase" data-uc="images"><span class="usecase__box"></span><span><b>Upload images</b><small>avatars, photos, files</small></span></button></li>
+                <li><button type="button" class="usecase" data-uc="live"><span class="usecase__box"></span><span><b>Live updates</b><small>chat, multiplayer, notifications</small></span></button></li>
+                <li><button type="button" class="usecase" data-uc="auto"><span class="usecase__box"></span><span><b>Run things automatically</b><small>emails, schedules, webhooks</small></span></button></li>
+              </ul>
+            </div>
+
+            <div class="config__right">
+              <p class="config__label">What we set up for you</p>
+              <div class="plan" id="plan" aria-live="polite"></div>
+              <div class="config__foot">
+                <span id="plan-note" class="plan__note"></span>
+                <button type="button" class="cta cta--sm" id="provision">Provision it <span aria-hidden="true">↵</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PRICING ================= -->
+    <section class="section" id="pricing">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="eyebrow">// pricing</p>
+          <h2>One price. No surprise bills.</h2>
+          <p class="section__sub">Start with the toolbox. Add a backend when your app needs one.</p>
+        </header>
+
+        <div class="pricing">
+          <article class="plan-card plan-card--main">
+            <p class="plan-card__name">1SSO Starter Toolbox</p>
+            <p class="plan-card__price"><span class="amt">$20</span><span class="per"> / month</span></p>
+            <ul class="plan-card__list">
+              <li><span class="ok">✔</span> 1 unified 1SSO API key</li>
+              <li><span class="ok">✔</span> Built-in user authentication (SSO)</li>
+              <li><span class="ok">✔</span> Access to thousands of relayed public APIs</li>
+              <li><span class="ok">✔</span> Bring-your-own-key dashboard connectors</li>
+            </ul>
+            <a class="cta cta--block" href="#quickstart">Get Your 1SSO Key <span aria-hidden="true">↗</span></a>
+          </article>
+
+          <article class="plan-card plan-card--addon">
+            <p class="plan-card__badge">add-on</p>
+            <p class="plan-card__name">Database &amp; Storage</p>
+            <p class="plan-card__price"><span class="amt">+$5–$10</span><span class="per"> / month</span></p>
+            <ul class="plan-card__list">
+              <li><span class="ok">✔</span> Managed Supabase backend</li>
+              <li><span class="ok">✔</span> Database storage, file/image buckets &amp; edge functions</li>
+              <li><span class="ok">✔</span> Automated setup without touching backend dashboards</li>
+            </ul>
+            <a class="cta cta--ghost cta--block" href="#backend">See how it works</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= QUICKSTART ================= -->
+    <section class="section section--alt" id="quickstart">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="eyebrow">// quickstart</p>
+          <h2>Three steps. Maybe two minutes.</h2>
+        </header>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step__n">1</span>
+            <h3>Copy your 1SSO key</h3>
+            <p>Grab it from your dashboard. It's the only secret you'll need to carry around.</p>
+            <div class="mini"><code>1sso_live_98a7s6d...</code></div>
+          </li>
+          <li class="step">
+            <span class="step__n">2</span>
+            <h3>Paste it in <code>.env</code></h3>
+            <p>One line. That's the whole file.</p>
+            <div class="mini">
+              <code>1SSO_API_KEY=1sso_live_98a7s6d...</code>
+              <button type="button" class="copy" data-copy="1SSO_API_KEY=1sso_live_98a7s6d..." aria-label="Copy .env line">copy</button>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step__n">3</span>
+            <h3>Prompt your AI builder</h3>
+            <p>Tell Lovable, Bolt, or Cursor to use 1SSO. Then go build the fun part.</p>
+            <div class="mini mini--prompt">
+              <code>Use 1SSO for auth and storage. The key is in .env as 1SSO_API_KEY.</code>
+              <button type="button" class="copy" data-copy="Use 1SSO for auth and storage. The key is in .env as 1SSO_API_KEY." aria-label="Copy prompt">copy</button>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= FINAL CTA ================= -->
+    <section class="final">
+      <div class="wrap final__inner">
+        <h2>Ship the app.<br /><span>Skip the setup.</span></h2>
+        <p>One key in your <code>.env</code>. Everything else is a toggle.</p>
+        <div class="cta-row cta-row--center">
+          <a class="cta" href="#pricing">Get Your 1SSO Key <span aria-hidden="true">↗</span></a>
+          <a class="cta cta--ghost" href="#apis">Browse the APIs</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <a class="brand" href="#top" aria-label="1SSO home">
+        <svg class="brand__icon" viewBox="0 0 16 16" aria-hidden="true">
+          <g fill="#ff9a47"><path d="M3 3h4v1H3zM2 4h1v3H2zM7 4h1v3H7zM3 7h4v1H3z"/><path d="M8 5h7v2H8z"/><path d="M12 7h1v2h-1zM14 7h1v2h-1z"/></g>
+        </svg>
+        <span class="brand__name">1SSO</span>
+      </a>
+      <p class="footer__tag">The indie developer toolbox.</p>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="#toolbox">Toolbox</a>
+        <a href="#apis">APIs</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#quickstart">Docs</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
