@@ -172,21 +172,26 @@ html.os-windows .winctl i:nth-child(3)::after { transform: translate(-50%, -50%)
 .hero__top {
   display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); align-items: stretch;
   min-height: 600px;
+  container-type: inline-size;
 }
 .hero__copy {
   position: relative; z-index: 5; align-self: center; min-width: 0;
   padding: clamp(40px, 5vw, 64px) 0 clamp(40px, 5vw, 64px) max(20px, calc((100% - var(--wrap)) / 2));
 }
 .hero__copy > * { max-width: 600px; }
+/* Art column is 1.05fr and pulled left by 6% of itself, so its left edge sits at 44.35% of the hero.
+   Paragraph and logo row stop there, and never grow past the 760px width measured beside the image. */
 .hero__copy > .lede,
-.hero__copy > .badges { max-width: 760px; }
+.hero__copy > .badges {
+  max-width: min(760px, calc(44.35cqi - max(20px, (47.5cqi - var(--wrap)) / 2)));
+}
 .hero > .wrap { position: relative; z-index: 5; }
 .headline { font-weight: 700; font-size: clamp(40px, 5.4vw, 80px); line-height: 0.98; letter-spacing: -0.01em; display: flex; flex-direction: column; }
 .headline__a { color: var(--orange); text-shadow: 0 0 40px rgba(255, 154, 71, 0.28); }
 .headline__b { color: var(--cream); }
-.lede { margin: 24px 0 30px; max-width: 760px; font-size: clamp(16px, 1.5vw, 19px); line-height: 1.55; color: #ddd7e6; }
+.lede { margin: 24px 0 30px; max-width: 40em; font-size: clamp(16px, 1.5vw, 19px); line-height: 1.55; color: #ddd7e6; }
 
-.badges { display: flex; align-items: center; gap: 14px; flex-wrap: nowrap; margin-top: 30px; min-width: 0; max-width: 760px; overflow: hidden; }
+.badges { display: flex; align-items: center; gap: 14px; flex-wrap: nowrap; margin-top: 30px; min-width: 0; overflow: hidden; }
 .badges__label { flex: none; font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
 .badges__list {
   display: flex; flex-wrap: nowrap; gap: 10px; min-width: 0;
@@ -434,7 +439,9 @@ body.vibe-mode .cta { animation: rainbow 3s linear infinite; }
   transition: border-color .15s, background .15s, transform .15s;
 }
 .api:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.3); }
-.api__logo { flex: none; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 9px; font-size: 19px; background: var(--c, #333); color: #fff; font-weight: 700; font-family: var(--font-mono); }
+.api__logo { flex: none; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 9px; background: #fff; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08); }
+.api__logo img { width: 32px; height: 32px; object-fit: contain; display: block; -webkit-user-drag: none; }
+.api__logo img.is-fill { width: 100%; height: 100%; object-fit: cover; }
 .api__txt { min-width: 0; flex: 1; display: flex; flex-direction: column; }
 .api__txt b { font-size: 14.5px; color: #f2ecdf; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .api__txt small { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -568,6 +575,8 @@ body.vibe-mode .cta { animation: rainbow 3s linear infinite; }
   .step:not(:last-child)::after { content: "↓"; right: auto; left: 50%; top: auto; bottom: -17px; transform: translateX(-50%); }
   .hero__top { grid-template-columns: 1fr; min-height: 0; }
   .hero__copy { padding: 36px 20px 8px; }
+  .hero__copy > .lede,
+  .hero__copy > .badges { max-width: 40em; }
   .hero__art { margin: 0; height: 380px; min-height: 0; }
   .scene {
     -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%);

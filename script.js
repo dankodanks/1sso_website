@@ -378,24 +378,24 @@
      API directory (search + category + toggles)
      ========================================================= */
   const apis = [
-    { n: "Google Maps",     d: "Maps, places, geocoding", cat: "google", c: "#34a853", g: "📍" },
-    { n: "Google Login",    d: "Sign-in, if you enable it", cat: "google", c: "#4285f4", g: "G" },
-    { n: "YouTube",         d: "Videos, channels, search", cat: "google", c: "#ff0033", g: "▶" },
-    { n: "Google Analytics",d: "Your key, in the dashboard", cat: "google", c: "#f9ab00", g: "📈" },
-    { n: "Google Play",     d: "Apps, reviews, stats", cat: "google", c: "#01875f", g: "▷" },
-    { n: "Spotify",         d: "Tracks, playlists, artists", cat: "media", c: "#1db954", g: "♫" },
-    { n: "TMDB",            d: "Movies & TV metadata", cat: "media", c: "#01b4e4", g: "🎬" },
-    { n: "Giphy",           d: "GIFs & stickers", cat: "media", c: "#9b5de5", g: "✺" },
-    { n: "Unsplash",        d: "Photography", cat: "media", c: "#2b2b2b", g: "📷" },
-    { n: "Formula 1",       d: "Races, drivers, lap data", cat: "data", c: "#e10600", g: "🏁" },
-    { n: "OpenWeather",     d: "Forecasts & climate", cat: "data", c: "#eb6e4b", g: "☀" },
-    { n: "NASA",            d: "APOD, Mars rovers, NEOs", cat: "data", c: "#0b3d91", g: "🚀" },
-    { n: "CoinGecko",       d: "Crypto prices & markets", cat: "data", c: "#6bbf4e", g: "₿" },
-    { n: "PokéAPI",         d: "Pokémon data", cat: "data", c: "#ee4035", g: "◓" },
-    { n: "OpenAI",          d: "Your key, in the dashboard", cat: "ai", c: "#10a37f", g: "✦" },
-    { n: "Supabase",        d: "Your project, in the dashboard", cat: "ai", c: "#3ecf8e", g: "⚡" },
-    { n: "GitHub",          d: "Repos, issues, users", cat: "ai", c: "#30363d", g: "⌥" },
-    { n: "Resend",          d: "Your key, in the dashboard", cat: "ai", c: "#111111", g: "✉" }
+    { n: "Google Maps",     d: "Maps, places, geocoding", cat: "google", logo: "assets/logos/apis/google-maps.svg" },
+    { n: "Google Login",    d: "Sign-in, if you enable it", cat: "google", logo: "assets/logos/apis/google.svg" },
+    { n: "YouTube",         d: "Videos, channels, search", cat: "google", logo: "assets/logos/apis/youtube.svg" },
+    { n: "Google Analytics",d: "Your key, in the dashboard", cat: "google", logo: "assets/logos/apis/google-analytics.svg" },
+    { n: "Google Play",     d: "Apps, reviews, stats", cat: "google", logo: "assets/logos/apis/google-play.svg" },
+    { n: "Spotify",         d: "Tracks, playlists, artists", cat: "media", logo: "assets/logos/apis/spotify.svg" },
+    { n: "TMDB",            d: "Movies & TV metadata", cat: "media", logo: "assets/logos/apis/tmdb.svg" },
+    { n: "Giphy",           d: "GIFs & stickers", cat: "media", logo: "assets/logos/apis/giphy.svg" },
+    { n: "Unsplash",        d: "Photography", cat: "media", logo: "assets/logos/apis/unsplash.svg" },
+    { n: "Formula 1",       d: "Races, drivers, lap data", cat: "data", logo: "assets/logos/apis/f1.svg" },
+    { n: "OpenWeather",     d: "Forecasts & climate", cat: "data", logo: "assets/logos/apis/openweather.png", fill: true },
+    { n: "NASA",            d: "APOD, Mars rovers, NEOs", cat: "data", logo: "assets/logos/apis/nasa.svg" },
+    { n: "CoinGecko",       d: "Crypto prices & markets", cat: "data", logo: "assets/logos/apis/coingecko.png", fill: true },
+    { n: "PokéAPI",         d: "Pokémon data", cat: "data", logo: "assets/logos/apis/pokemon.svg" },
+    { n: "OpenAI",          d: "Your key, in the dashboard", cat: "ai", logo: "assets/logos/apis/openai.svg" },
+    { n: "Supabase",        d: "Your project, in the dashboard", cat: "ai", logo: "assets/logos/apis/supabase.svg" },
+    { n: "GitHub",          d: "Repos, issues, users", cat: "ai", logo: "assets/logos/apis/github.svg" },
+    { n: "Resend",          d: "Your key, in the dashboard", cat: "ai", logo: "assets/logos/apis/resend.svg" }
   ];
 
   const grid = $("#api-grid");
@@ -415,7 +415,7 @@
     grid.innerHTML = list.map((a) => `
       <li>
         <button type="button" class="api${on.has(a.n) ? " is-on" : ""}" data-n="${a.n}" aria-pressed="${on.has(a.n)}">
-          <span class="api__logo" style="--c:${a.c}" aria-hidden="true">${a.g}</span>
+          <span class="api__logo" aria-hidden="true"><img src="${a.logo}" alt="" width="32" height="32" draggable="false"${a.fill ? ' class="is-fill"' : ""} /></span>
           <span class="api__txt"><b>${a.n}</b><small>${a.d}</small></span>
           <span class="api__sw" aria-hidden="true"></span>
         </button>
