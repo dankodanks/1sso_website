@@ -80,42 +80,191 @@
     ["WEBHOOK_SECRET", "whsec_2fK8pLm0Qa9"]
   ];
 
+  const lines = messy.map(([k, v]) => `${k}=${v}`);
   const messyEl = $("#messy");
-  messyEl.innerHTML = messy
-    .map(([k, v], i) => `<span class="ln" style="--i:${i}"><span class="k">${k}</span>=<span class="v">${v}</span></span>`)
-    .join("");
+  const lineTag = $(".envcmp__pane--before .pane__tag");
+  const caret = document.createElement("span");
+  caret.className = "caret";
+  caret.setAttribute("aria-hidden", "true");
+  let lineEls = [];
+
+  function renderFull() {
+    messyEl.classList.remove("is-deleting", "is-cleared");
+    messyEl.innerHTML = lines
+      .map((text, i) => {
+        const eq = text.indexOf("=");
+        return `<span class="ln" style="--i:${i}"><span class="k">${text.slice(0, eq)}</span>=<span class="v">${text.slice(eq + 1)}</span></span>`;
+      })
+      .join("");
+    lineEls = Array.from(messyEl.querySelectorAll(".ln"));
+    lineEls[lineEls.length - 1].appendChild(caret);
+    lineTag.textContent = `${lines.length} lines`;
+  }
+
+  function lockMessyHeight() {
+    if (deleting || messyEl.classList.contains("is-cleared")) return;
+    messyEl.style.minHeight = "";
+    messyEl.style.minHeight = messyEl.offsetHeight + "px";
+  }
+
+  function paintLine(el, text) {
+    el.replaceChildren();
+    const eq = text.indexOf("=");
+    const k = document.createElement("span");
+    k.className = "k";
+    if (eq === -1) {
+      k.textContent = text;
+      el.append(k, caret);
+      return;
+    }
+    const v = document.createElement("span");
+    v.className = "v";
+    k.textContent = text.slice(0, eq);
+    v.textContent = text.slice(eq + 1);
+    el.append(k, "=", v, caret);
+  }
+
+  function setLineCount(n) {
+    lineTag.textContent = n === 1 ? "1 line" : `${n} lines`;
+  }
+
+  // held backspace: a few readable keystrokes, then the repeat rate runs away
+  function charsPerSec(ms) {
+    const t = ms / 1000;
+    return Math.min(1400, 28 + Math.pow(t, 2.4) * 640);
+  }
 
   const cmp = $("#envcmp");
-  const OLD_MS = 1800;   // how long the messy "old way" is shown
+  const OLD_MS = 1800;   // how long the messy "old way" sits before the cursor starts
   const NEW_MS = 4200;   // how long the 1SSO "new way" is shown
   let loopTimer = null;
   let inView = false;
   let hovering = false;
+  let deleting = false;
+  let del = null;
 
-  // old way -> (wait) -> 1SSO way -> (wait) -> old way -> ...
-  function loopStep(merged) {
-    clearTimeout(loopTimer);
-    cmp.classList.toggle("is-merged", merged);
-    if (reduceMotion) { cmp.classList.add("is-merged"); return; }
-    loopTimer = setTimeout(() => {
-      // pause while the user is hovering or the block is off-screen
-      if (hovering || !inView) { loopStep(merged); return; }
-      loopStep(!merged);
-    }, merged ? NEW_MS : OLD_MS);
+  function stopDelete() {
+    if (del) cancelAnimationFrame(del.raf);
+    del = null;
+    deleting = false;
+    messyEl.classList.remove("is-deleting");
   }
+
+  function erase(n) {
+    let li = del.li;
+    let remain = del.remain;
+    let removed = false;
+    while (n > 0 && li >= 0) {
+      if (remain <= 0) {
+        lineEls[li].remove();
+        li -= 1;
+        n -= 1;
+        removed = true;
+        remain = li >= 0 ? lines[li].length : 0;
+        continue;
+      }
+      const cut = Math.min(remain, n);
+      remain -= cut;
+      n -= cut;
+    }
+    del.li = li;
+    del.remain = remain;
+    if (li < 0) {
+      messyEl.classList.add("is-cleared");
+      messyEl.classList.remove("is-deleting");
+      const ghost = document.createElement("span");
+      ghost.className = "ln";
+      ghost.appendChild(caret);
+      messyEl.replaceChildren(ghost);
+      setLineCount(0);
+      return true;
+    }
+    if (removed) setLineCount(li + 1);
+    paintLine(lineEls[li], lines[li].slice(0, remain));
+    return false;
+  }
+
+  function beginDelete(onDone) {
+    stopDelete();
+    deleting = true;
+    del = {
+      li: lines.length - 1,
+      remain: lines[lines.length - 1].length,
+      elapsed: 0,
+      carry: 0,
+      last: 0,
+      raf: 0
+    };
+    const step = (now) => {
+      if (!del) return;
+      if (!del.last) del.last = now;
+      const dt = Math.min(48, now - del.last);
+      del.last = now;
+      if (hovering || !inView) {
+        messyEl.classList.remove("is-deleting");
+        del.raf = requestAnimationFrame(step);
+        return;
+      }
+      messyEl.classList.add("is-deleting");
+      del.elapsed += dt;
+      del.carry += (charsPerSec(del.elapsed) * dt) / 1000;
+      const n = Math.floor(del.carry);
+      if (n > 0) {
+        del.carry -= n;
+        if (erase(n)) {
+          deleting = false;
+          del = null;
+          onDone();
+          return;
+        }
+      }
+      del.raf = requestAnimationFrame(step);
+    };
+    del.raf = requestAnimationFrame(step);
+  }
+
+  // pause while the user is hovering or the block is off-screen
+  function schedule(fn, ms) {
+    clearTimeout(loopTimer);
+    loopTimer = setTimeout(() => {
+      if (hovering || !inView) { schedule(fn, ms); return; }
+      fn();
+    }, ms);
+  }
+
+  // full messy file -> backspace it away -> 1SSO line -> repeat
+  function showOld() {
+    clearTimeout(loopTimer);
+    stopDelete();
+    cmp.classList.remove("is-merged");
+    renderFull();
+    lockMessyHeight();
+    if (reduceMotion) { cmp.classList.add("is-merged"); return; }
+    schedule(() => {
+      beginDelete(() => {
+        cmp.classList.add("is-merged");
+        schedule(showOld, NEW_MS);
+      });
+    }, OLD_MS);
+  }
+
+  renderFull();
+  lockMessyHeight();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(lockMessyHeight);
+  window.addEventListener("resize", lockMessyHeight);
 
   if ("IntersectionObserver" in window) {
     let started = false;
     new IntersectionObserver((entries) => {
       inView = entries.some((e) => e.isIntersecting);
-      if (inView && !started) { started = true; loopStep(false); }
+      if (inView && !started) { started = true; showOld(); }
     }, { threshold: 0.35 }).observe(cmp);
   } else {
     cmp.classList.add("is-merged");
   }
   cmp.addEventListener("mouseenter", () => { hovering = true; });
   cmp.addEventListener("mouseleave", () => { hovering = false; });
-  $("#replay").addEventListener("click", () => loopStep(false));
+  $("#replay").addEventListener("click", () => showOld());
 
   /* =========================================================
      API directory (search + category + toggles)

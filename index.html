@@ -10,6 +10,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    (function () {
+      var uaData = navigator.userAgentData;
+      var platform = (uaData && uaData.platform) || navigator.platform || "";
+      var ua = navigator.userAgent || "";
+      if (/win/i.test(platform) || /Windows/i.test(ua)) {
+        document.documentElement.classList.add("os-windows");
+      }
+    })();
+  </script>
 </head>
 <body>
   <header class="nav">
@@ -97,6 +107,7 @@
               <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
               <span class="pane__title">.env <em>— the old way</em></span>
               <span class="pane__tag pane__tag--bad">25 lines</span>
+              <span class="winctl" aria-hidden="true"><i></i><i></i><i></i></span>
             </div>
             <pre class="envcode envcode--messy" id="messy" aria-hidden="true"></pre>
             <p class="sr-only">A cluttered .env file with around 25 separate secrets for Google, Spotify, YouTube, Supabase, OpenAI and more.</p>
@@ -112,6 +123,7 @@
               <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
               <span class="pane__title">.env <em>— the 1SSO way</em></span>
               <span class="pane__tag pane__tag--good">1 line</span>
+              <span class="winctl" aria-hidden="true"><i></i><i></i><i></i></span>
             </div>
             <div class="after__body">
               <div class="keyline">
@@ -262,6 +274,7 @@
             <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
             <span class="pane__title">1sso.dev / my-app / backend</span>
             <span class="pane__tag pane__tag--mock">roadmap preview</span>
+            <span class="winctl" aria-hidden="true"><i></i><i></i><i></i></span>
           </div>
 
           <div class="config__body">
