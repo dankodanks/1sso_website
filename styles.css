@@ -218,12 +218,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .after__list .tick { color: var(--green); margin-right: 4px; }
 .after__note { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
 
-/* spark decor */
-.spark { position: absolute; z-index: 4; font-family: var(--font-mono); pointer-events: none; animation: twinkle 3s ease-in-out infinite; }
-.spark--1 { left: 40px; top: 60px; font-size: 26px; color: var(--orange); text-shadow: 0 0 10px var(--orange); }
-.spark--2 { left: 18px; top: 100px; font-size: 14px; color: #ff7a3c; animation-delay: .8s; }
-.spark--3 { left: 44px; top: 122px; font-size: 14px; color: #6d6b86; animation-delay: 1.4s; }
-
 /* ---------- HERO ART (room scene) ---------- */
 .hero__art { position: relative; z-index: 1; margin-left: -6%; min-height: 100%; container-type: size; overflow: hidden; }
 /* the scene keeps the image's aspect ratio so hotspots (in %) always line up */
@@ -447,7 +441,6 @@ body.vibe-mode .cta { animation: rainbow 3s linear infinite; }
 
 /* ---------- ANIMATION ---------- */
 @keyframes blink { 50% { opacity: 0; } }
-@keyframes twinkle { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.8); } }
 @keyframes nudge { 0%, 100% { transform: translateX(-4px); } 50% { transform: translateX(5px); } }
 @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
 @keyframes breathe { 0%, 100% { opacity: .55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
@@ -471,7 +464,6 @@ body.vibe-mode .cta { animation: rainbow 3s linear infinite; }
   .features, .versus, .config__body, .pricing, .steps { grid-template-columns: 1fr; }
   .config__left { border-right: 0; border-bottom: 1px solid var(--line); }
   .step:not(:last-child)::after { content: "↓"; right: auto; left: 50%; top: auto; bottom: -17px; transform: translateX(-50%); }
-  .spark { display: none; }
   .hero__top { grid-template-columns: 1fr; min-height: 0; }
   .hero__copy { padding: 36px 20px 8px; }
   .hero__art { margin: 0; height: 380px; min-height: 0; }
