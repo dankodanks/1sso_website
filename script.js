@@ -122,23 +122,23 @@
      ========================================================= */
   const apis = [
     { n: "Google Maps",     d: "Maps, places, geocoding", cat: "google", c: "#34a853", g: "📍" },
-    { n: "Google Login",    d: "Sign in with Google",     cat: "google", c: "#4285f4", g: "G" },
-    { n: "YouTube",         d: "Videos, channels, search",cat: "google", c: "#ff0033", g: "▶" },
-    { n: "Google Analytics",d: "Traffic & events",        cat: "google", c: "#f9ab00", g: "📈" },
-    { n: "Google Play",     d: "Apps, reviews, stats",    cat: "google", c: "#01875f", g: "▷" },
+    { n: "Google Login",    d: "Sign-in, if you enable it", cat: "google", c: "#4285f4", g: "G" },
+    { n: "YouTube",         d: "Videos, channels, search", cat: "google", c: "#ff0033", g: "▶" },
+    { n: "Google Analytics",d: "Your key, in the dashboard", cat: "google", c: "#f9ab00", g: "📈" },
+    { n: "Google Play",     d: "Apps, reviews, stats", cat: "google", c: "#01875f", g: "▷" },
     { n: "Spotify",         d: "Tracks, playlists, artists", cat: "media", c: "#1db954", g: "♫" },
-    { n: "TMDB",            d: "Movies & TV metadata",    cat: "media", c: "#01b4e4", g: "🎬" },
-    { n: "Giphy",           d: "GIFs & stickers",         cat: "media", c: "#9b5de5", g: "✺" },
-    { n: "Unsplash",        d: "Free photography",        cat: "media", c: "#2b2b2b", g: "📷" },
-    { n: "Formula 1",       d: "Races, drivers, lap data",cat: "data", c: "#e10600", g: "🏁" },
-    { n: "OpenWeather",     d: "Forecasts & climate",     cat: "data", c: "#eb6e4b", g: "☀" },
+    { n: "TMDB",            d: "Movies & TV metadata", cat: "media", c: "#01b4e4", g: "🎬" },
+    { n: "Giphy",           d: "GIFs & stickers", cat: "media", c: "#9b5de5", g: "✺" },
+    { n: "Unsplash",        d: "Photography", cat: "media", c: "#2b2b2b", g: "📷" },
+    { n: "Formula 1",       d: "Races, drivers, lap data", cat: "data", c: "#e10600", g: "🏁" },
+    { n: "OpenWeather",     d: "Forecasts & climate", cat: "data", c: "#eb6e4b", g: "☀" },
     { n: "NASA",            d: "APOD, Mars rovers, NEOs", cat: "data", c: "#0b3d91", g: "🚀" },
     { n: "CoinGecko",       d: "Crypto prices & markets", cat: "data", c: "#6bbf4e", g: "₿" },
-    { n: "PokéAPI",         d: "Every Pokémon, ever",     cat: "data", c: "#ee4035", g: "◓" },
-    { n: "OpenAI",          d: "Your own key, your models", cat: "ai", c: "#10a37f", g: "✦" },
-    { n: "Supabase",        d: "Bring your own project",  cat: "ai", c: "#3ecf8e", g: "⚡" },
-    { n: "GitHub",          d: "Repos, issues, users",    cat: "ai", c: "#30363d", g: "⌥" },
-    { n: "Resend",          d: "Transactional email",     cat: "ai", c: "#111111", g: "✉" }
+    { n: "PokéAPI",         d: "Pokémon data", cat: "data", c: "#ee4035", g: "◓" },
+    { n: "OpenAI",          d: "Your key, in the dashboard", cat: "ai", c: "#10a37f", g: "✦" },
+    { n: "Supabase",        d: "Your project, in the dashboard", cat: "ai", c: "#3ecf8e", g: "⚡" },
+    { n: "GitHub",          d: "Repos, issues, users", cat: "ai", c: "#30363d", g: "⌥" },
+    { n: "Resend",          d: "Your key, in the dashboard", cat: "ai", c: "#111111", g: "✉" }
   ];
 
   const grid = $("#api-grid");
@@ -162,14 +162,12 @@
           <span class="api__txt"><b>${a.n}</b><small>${a.d}</small></span>
           <span class="api__sw" aria-hidden="true"></span>
         </button>
-      </li>`).join("") +
-      (list.length && !q && cat === "all"
-        ? `<li><div class="api api--more">+ thousands more</div></li>` : "");
+      </li>`).join("");
     empty.hidden = list.length > 0;
   }
 
   function renderStatus() {
-    status.innerHTML = `<b>${on.size}</b> toggled on · <span class="ok">your .env is still 1 line</span>`;
+    status.innerHTML = `<b>${on.size}</b> marked in this preview · <span class="ok">.env stays 1 line</span>`;
   }
 
   grid.addEventListener("click", (e) => {
@@ -197,24 +195,24 @@
      ========================================================= */
   const usecases = {
     login: {
-      title: "User accounts", pill: "included", inc: true,
-      items: ["Sign-in with email & social login", "Sessions handled for you", "Password reset flow"]
+      title: "User accounts", pill: "your key", inc: true,
+      items: ["Providers you enable for the project", "App calls 1SSO with the project key", "Configured in the dashboard, not auto-provisioned"]
     },
     data: {
-      title: "Database for user data", pill: "add-on",
-      items: ["Table: profiles", "Table: user_data", "Row-level security (users see only their own rows)"]
+      title: "Database for user data", pill: "coming soon",
+      items: ["Planned: tables for profiles and user data", "Not created in the first release", "No managed database yet"]
     },
     images: {
-      title: "Image uploads", pill: "add-on",
-      items: ["Storage bucket: uploads", "Images only, 5 MB max", "Public URLs for displaying them"]
+      title: "Image uploads", pill: "coming soon",
+      items: ["Planned: file storage for uploads", "Not created in the first release", "No buckets yet"]
     },
     live: {
-      title: "Live updates", pill: "add-on",
-      items: ["Realtime channel: updates", "Table: messages", "Auto-sync to every open tab"]
+      title: "Live updates", pill: "coming soon",
+      items: ["Planned: realtime updates", "Not created in the first release", "Not part of the launch"]
     },
     auto: {
-      title: "Automations", pill: "add-on",
-      items: ["Edge function: on-signup", "Scheduled job (cron)", "Webhook endpoint"]
+      title: "Automations", pill: "coming soon",
+      items: ["Planned: jobs and webhooks", "Not created in the first release", "Not part of the launch"]
     }
   };
 
@@ -239,7 +237,7 @@
     $$(".usecase", ucWrap).forEach((b) => b.classList.toggle("is-on", picked.has(b.dataset.uc)));
 
     if (!keys.length) {
-      plan.innerHTML = `<p class="plan__empty">Nothing yet. Describe your app or tick a box and we'll show what gets set up.</p>`;
+      plan.innerHTML = `<p class="plan__empty">Nothing yet. Describe a use-case or tick a box to see what the key covers and what is still coming.</p>`;
       planNote.textContent = "";
       return;
     }
@@ -250,10 +248,10 @@
         <ul>${u.items.map((i) => `<li>${i}</li>`).join("")}</ul>
       </div>`;
     }).join("");
-    const needsAddon = keys.some((k) => !usecases[k].inc);
-    planNote.textContent = needsAddon
-      ? "Uses the Database & Storage add-on"
-      : "Covered by the Starter Toolbox";
+    const needsLater = keys.some((k) => !usecases[k].inc);
+    planNote.textContent = needsLater
+      ? "Database, storage, and jobs are coming soon — this preview provisions nothing"
+      : "Auth uses the project key. You still configure providers in the dashboard.";
   }
 
   describe.addEventListener("input", () => {
@@ -273,7 +271,7 @@
 
   provisionBtn.addEventListener("click", () => {
     const items = $$(".plan__item", plan);
-    if (!items.length) { toast("pick something first"); return; }
+    if (!items.length) { toast("tick a use-case first"); return; }
     if (provisioning) return;
     provisioning = true;
     items.forEach((el) => el.classList.remove("is-done", "is-busy"));
@@ -285,7 +283,7 @@
         el.classList.add("is-done");
         if (i === items.length - 1) {
           provisioning = false;
-          toast("all set ✔ (this is a preview)");
+          toast("roadmap preview only — nothing was provisioned");
         }
       }, i * step + (reduceMotion ? 0 : 550));
     });
@@ -538,7 +536,7 @@
     monitor() {
       arpeggio([523, 659, 784, 1047]);
       burst(["✔", "✨", "{ }"], spots.monitor.x, spots.monitor.y, 5);
-      toast("1SSO_API_KEY found ✔ auth, db, storage & APIs connected", 3200);
+      toast("1SSO_API_KEY found ✔ auth and approved connectors use this key", 3200);
     },
     window() {
       state.wishes++;

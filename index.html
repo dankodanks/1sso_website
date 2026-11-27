@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>1SSO — The Indie Developer Toolbox. One Platform. One API Key.</title>
-  <meta name="description" content="Stop wrestling with 25-line .env files. One 1SSO key unlocks authentication, a managed database, storage, and thousands of APIs. Built for indie devs and vibe coders using Lovable, Bolt, and Cursor." />
+  <title>1SSO — One key for auth, approved APIs, and AI workflows.</title>
+  <meta name="description" content="One 1SSO key per project for authentication with the providers you configure, routing through approved API connectors, and AI/MCP workflows. Managed databases and storage are coming later." />
   <meta name="theme-color" content="#141428" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,10 +32,9 @@
       <a href="#why">Why 1SSO</a>
       <a href="#toolbox">Toolbox</a>
       <a href="#apis">APIs</a>
-      <a href="#backend">Backend</a>
-      <a href="#pricing">Pricing</a>
+      <a href="#backend">Roadmap</a>
       <a href="#quickstart">Docs</a>
-      <a class="btn-hop" href="#get-key">Get your key <span aria-hidden="true">→</span></a>
+      <a class="btn-hop" href="#quickstart">Get your key <span aria-hidden="true">→</span></a>
     </nav>
   </header>
 
@@ -44,20 +43,20 @@
     <section class="hero">
       <div class="hero__top">
       <div class="hero__copy">
-        <p class="eyebrow">// the indie developer toolbox</p>
+        <p class="eyebrow">// one key for auth, apis, and ai</p>
         <h1 class="headline">
           <span class="headline__a">1SSO.</span>
           <span class="headline__b">One platform.<br />One API key.</span>
         </h1>
         <p class="lede">
-          Stop wasting hours hunting for API keys and wrestling with messy <code>.env</code> files.
-          Plug a single line of code into Lovable, Bolt, or Cursor to unlock authentication,
-          databases, storage, and thousands of APIs instantly.
+          Stop hunting for a new secret on every service. One <code>1SSO_API_KEY</code> in the project
+          covers authentication for the providers you configure, routing through approved API connectors,
+          and AI/MCP workflows in Lovable, Bolt, or Cursor.
         </p>
 
         <div class="cta-row" id="get-key">
-          <a class="cta" href="#pricing">Get Your 1SSO Key <span aria-hidden="true">↗</span></a>
-          <a class="cta cta--ghost" href="#toolbox">Explore the Toolbox</a>
+          <a class="cta" href="#quickstart">Get your key <span aria-hidden="true">↗</span></a>
+          <a class="cta cta--ghost" href="#toolbox">See what ships first</a>
         </div>
 
         <div class="badges" aria-label="Works with">
@@ -120,12 +119,12 @@
                 <button type="button" class="copy" data-copy="1SSO_API_KEY=1sso_live_98a7s6d..." aria-label="Copy .env line">copy</button>
               </div>
               <ul class="after__list">
-                <li><span class="tick">✔</span> Auth</li>
-                <li><span class="tick">✔</span> Database &amp; storage</li>
-                <li><span class="tick">✔</span> Google, Spotify, YouTube, Maps…</li>
-                <li><span class="tick">✔</span> Your own OpenAI / GA / Supabase keys</li>
+                <li><span class="tick">✔</span> Auth for configured providers</li>
+                <li><span class="tick">✔</span> Approved API connectors</li>
+                <li><span class="tick">✔</span> AI &amp; MCP on the same key</li>
+                <li><span class="soon">○</span> Database &amp; storage <em>later</em></li>
               </ul>
-              <p class="after__note">Everything else lives in your dashboard. Not in your repo.</p>
+              <p class="after__note">Provider and connector credentials stay in the project dashboard. The repo keeps one line.</p>
             </div>
           </div>
         </div>
@@ -146,8 +145,8 @@
             <h3>25 lines of keyboard mash.</h3>
             <p>
               You want to build a simple app, and suddenly you're managing a wall of
-              gibberish in your <code>.env</code>. Setting up Google Login, YouTube, Spotify,
-              Maps, authentication, and a database takes longer than building the actual app.
+              gibberish in your <code>.env</code>. A dev console for login, another for each API,
+              and a credentials file you can't safely share.
             </p>
             <ul class="vs__list">
               <li><span class="x">✕</span> A dev console per service</li>
@@ -158,15 +157,16 @@
 
           <article class="vs vs--new">
             <p class="vs__label">The 1SSO way</p>
-            <h3>One key. Toggle the rest.</h3>
+            <h3>One key. Configure the project.</h3>
             <p>
-              Drop one API key into your <code>.env</code> file. Toggle on the APIs and backend
-              tools you need inside your 1SSO dashboard, and start building. Sharing a project
-              with a collaborator? Send them one line instead of a massive credentials file.
+              Put one API key in the project <code>.env</code>. In the dashboard, enable the
+              auth providers and API connectors approved for that project — including keys you
+              bring yourself. Lovable, Bolt, Cursor, and MCP clients use that same key.
+              Sharing the repo means sending one line, not a credentials file.
             </p>
             <ul class="vs__list">
-              <li><span class="ok">✔</span> One dashboard for everything</li>
-              <li><span class="ok">✔</span> Switch tools on without touching code</li>
+              <li><span class="ok">✔</span> One key for the project</li>
+              <li><span class="ok">✔</span> Providers and connectors set in the dashboard</li>
               <li><span class="ok">✔</span> Collaborators get one line, not a vault</li>
             </ul>
           </article>
@@ -179,37 +179,34 @@
       <div class="wrap">
         <header class="section__head">
           <p class="eyebrow">// the toolbox</p>
-          <h2>Everything in the box. Nothing to configure.</h2>
-          <p class="section__sub">Four tools, one key. Use what you need, ignore the rest.</p>
+          <h2>What the first release actually covers.</h2>
+          <p class="section__sub">One project key for auth, approved API connectors, and AI/MCP workflows. You configure them. Managed databases and storage come later.</p>
         </header>
 
         <div class="features">
           <article class="feature">
             <div class="feature__icon" aria-hidden="true">🔐</div>
-            <h3>Built-In Authentication</h3>
-            <p>Instant user login and single sign-on right out of the box. No external auth setup required.</p>
-            <span class="feature__tag">included in Starter</span>
+            <h3>Single-key authentication</h3>
+            <p>Sign-in goes through the providers you enable for the project. The app calls 1SSO with one key — you still choose and configure those providers in the dashboard.</p>
           </article>
 
           <article class="feature">
             <div class="feature__icon" aria-hidden="true">🔌</div>
-            <h3>Plug-and-Play API Relay</h3>
-            <p>Instant access to thousands of popular APIs (Google Maps, YouTube, Spotify, Google Play, Formula 1, and more) through a single unified gateway.</p>
-            <span class="feature__tag">included in Starter</span>
+            <h3>Approved API routing</h3>
+            <p>Calls go through connectors approved for the project. When a service needs your own credential — OpenAI, analytics, your Supabase project — you store that key in the dashboard, not in the repo.</p>
           </article>
 
           <article class="feature">
-            <div class="feature__icon" aria-hidden="true">🗝️</div>
-            <h3>1-Click Private Connectors</h3>
-            <p>Need your own OpenAI/ChatGPT, Google Analytics, or Supabase keys? Paste them into your 1SSO backend once and keep your local project clean.</p>
-            <span class="feature__tag">included in Starter</span>
+            <div class="feature__icon" aria-hidden="true">✦</div>
+            <h3>AI &amp; MCP workflows</h3>
+            <p>Lovable, Bolt, Cursor, and MCP clients use the same project key. They can call the auth and connectors you've already configured. They don't turn new services on by themselves.</p>
           </article>
 
           <article class="feature feature--hot">
             <div class="feature__icon" aria-hidden="true">🗄️</div>
-            <h3>Zero-Config Backend <small>(managed Supabase)</small></h3>
-            <p>Don't know what "edge functions" or "bucket storage" mean? Just tell us what your app does, like <q>my users need to upload profile photos</q>, and we provision the database and storage behind the scenes.</p>
-            <span class="feature__tag feature__tag--addon">add-on</span>
+            <h3>Managed database &amp; storage <small>(coming soon)</small></h3>
+            <p>Tables, file storage, and background jobs are on the roadmap. The first release does not provision a database, buckets, or functions.</p>
+            <span class="feature__tag feature__tag--soon">coming soon</span>
           </article>
         </div>
       </div>
@@ -220,8 +217,8 @@
       <div class="wrap">
         <header class="section__head">
           <p class="eyebrow">// api directory</p>
-          <h2>See what's inside the box.</h2>
-          <p class="section__sub">A peek at the catalog. Search it, flip a few on, and notice your <code>.env</code> doesn't change.</p>
+          <h2>Connectors you enable per project.</h2>
+          <p class="section__sub">An illustrative sample, not a promise that every name below is live. A connector works when it's approved for your project and you've enabled it in the dashboard. This preview doesn't connect anything, and your <code>.env</code> stays one line.</p>
         </header>
 
         <div class="dir">
@@ -229,7 +226,7 @@
             <label class="search">
               <span class="search__icon" aria-hidden="true">⌕</span>
               <span class="sr-only">Search APIs</span>
-              <input id="api-search" type="search" placeholder="Search APIs… try “maps” or “music”" autocomplete="off" />
+              <input id="api-search" type="search" placeholder="Search this sample… try “maps” or “music”" autocomplete="off" />
             </label>
             <div class="chips" id="api-chips" role="group" aria-label="Filter by category">
               <button type="button" class="chip is-active" data-cat="all">All</button>
@@ -241,10 +238,10 @@
           </div>
 
           <ul class="apigrid" id="api-grid"></ul>
-          <p class="dir__empty" id="api-empty" hidden>No match yet. There are thousands more in the full directory, and we're adding more all the time.</p>
+          <p class="dir__empty" id="api-empty" hidden>No match in this sample. The live list is the connectors approved for your project.</p>
 
           <div class="dir__foot">
-            <p id="api-status" aria-live="polite"><b>0</b> toggled on · <span class="ok">your .env is still 1 line</span></p>
+            <p id="api-status" aria-live="polite"><b>0</b> marked in this preview · <span class="ok">.env stays 1 line</span></p>
             <code class="dir__line">1SSO_API_KEY=1sso_live_98a7s6d...</code>
           </div>
         </div>
@@ -255,16 +252,16 @@
     <section class="section section--alt" id="backend">
       <div class="wrap">
         <header class="section__head">
-          <p class="eyebrow">// zero-config backend</p>
-          <h2>Say what your app does. Skip the jargon.</h2>
-          <p class="section__sub">Pick by use-case, or just describe it. We handle the tables, buckets, and functions.</p>
+          <p class="eyebrow">// coming soon</p>
+          <h2>Database and storage, after launch.</h2>
+          <p class="section__sub">A preview of how a later backend could be described in plain language. Nothing here is provisioned. This does not create tables, buckets, or functions.</p>
         </header>
 
         <div class="config" aria-label="Plain-English backend configurator preview">
           <div class="config__bar">
             <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
             <span class="pane__title">1sso.dev / my-app / backend</span>
-            <span class="pane__tag pane__tag--mock">preview</span>
+            <span class="pane__tag pane__tag--mock">roadmap preview</span>
           </div>
 
           <div class="config__body">
@@ -276,7 +273,7 @@
 
               <p class="config__label">…or just tick what you need</p>
               <ul class="usecases" id="usecases">
-                <li><button type="button" class="usecase" data-uc="login"><span class="usecase__box"></span><span><b>Let people sign in</b><small>accounts, logins, “forgot password”</small></span></button></li>
+                <li><button type="button" class="usecase" data-uc="login"><span class="usecase__box"></span><span><b>Let people sign in</b><small>providers you enable for the project</small></span></button></li>
                 <li><button type="button" class="usecase" data-uc="data"><span class="usecase__box"></span><span><b>Save user data</b><small>profiles, settings, anything you store</small></span></button></li>
                 <li><button type="button" class="usecase" data-uc="images"><span class="usecase__box"></span><span><b>Upload images</b><small>avatars, photos, files</small></span></button></li>
                 <li><button type="button" class="usecase" data-uc="live"><span class="usecase__box"></span><span><b>Live updates</b><small>chat, multiplayer, notifications</small></span></button></li>
@@ -285,51 +282,14 @@
             </div>
 
             <div class="config__right">
-              <p class="config__label">What we set up for you</p>
+              <p class="config__label">What a later release might include</p>
               <div class="plan" id="plan" aria-live="polite"></div>
               <div class="config__foot">
                 <span id="plan-note" class="plan__note"></span>
-                <button type="button" class="cta cta--sm" id="provision">Provision it <span aria-hidden="true">↵</span></button>
+                <button type="button" class="cta cta--sm" id="provision">Preview the plan <span aria-hidden="true">↵</span></button>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= PRICING ================= -->
-    <section class="section" id="pricing">
-      <div class="wrap">
-        <header class="section__head">
-          <p class="eyebrow">// pricing</p>
-          <h2>One price. No surprise bills.</h2>
-          <p class="section__sub">Start with the toolbox. Add a backend when your app needs one.</p>
-        </header>
-
-        <div class="pricing">
-          <article class="plan-card plan-card--main">
-            <p class="plan-card__name">1SSO Starter Toolbox</p>
-            <p class="plan-card__price"><span class="amt">$20</span><span class="per"> / month</span></p>
-            <ul class="plan-card__list">
-              <li><span class="ok">✔</span> 1 unified 1SSO API key</li>
-              <li><span class="ok">✔</span> Built-in user authentication (SSO)</li>
-              <li><span class="ok">✔</span> Access to thousands of relayed public APIs</li>
-              <li><span class="ok">✔</span> Bring-your-own-key dashboard connectors</li>
-            </ul>
-            <a class="cta cta--block" href="#quickstart">Get Your 1SSO Key <span aria-hidden="true">↗</span></a>
-          </article>
-
-          <article class="plan-card plan-card--addon">
-            <p class="plan-card__badge">add-on</p>
-            <p class="plan-card__name">Database &amp; Storage</p>
-            <p class="plan-card__price"><span class="amt">+$5–$10</span><span class="per"> / month</span></p>
-            <ul class="plan-card__list">
-              <li><span class="ok">✔</span> Managed Supabase backend</li>
-              <li><span class="ok">✔</span> Database storage, file/image buckets &amp; edge functions</li>
-              <li><span class="ok">✔</span> Automated setup without touching backend dashboards</li>
-            </ul>
-            <a class="cta cta--ghost cta--block" href="#backend">See how it works</a>
-          </article>
         </div>
       </div>
     </section>
@@ -339,20 +299,20 @@
       <div class="wrap">
         <header class="section__head">
           <p class="eyebrow">// quickstart</p>
-          <h2>Three steps. Maybe two minutes.</h2>
+          <h2>Get the key into the project.</h2>
         </header>
 
         <ol class="steps">
           <li class="step">
             <span class="step__n">1</span>
             <h3>Copy your 1SSO key</h3>
-            <p>Grab it from your dashboard. It's the only secret you'll need to carry around.</p>
+            <p>Take it from the project dashboard. The app uses this key for auth and the connectors you enable.</p>
             <div class="mini"><code>1sso_live_98a7s6d...</code></div>
           </li>
           <li class="step">
             <span class="step__n">2</span>
-            <h3>Paste it in <code>.env</code></h3>
-            <p>One line. That's the whole file.</p>
+            <h3>Add it to <code>.env</code></h3>
+            <p>One line identifies the project. Other service credentials stay in the dashboard.</p>
             <div class="mini">
               <code>1SSO_API_KEY=1sso_live_98a7s6d...</code>
               <button type="button" class="copy" data-copy="1SSO_API_KEY=1sso_live_98a7s6d..." aria-label="Copy .env line">copy</button>
@@ -360,11 +320,11 @@
           </li>
           <li class="step">
             <span class="step__n">3</span>
-            <h3>Prompt your AI builder</h3>
-            <p>Tell Lovable, Bolt, or Cursor to use 1SSO. Then go build the fun part.</p>
+            <h3>Configure, then prompt</h3>
+            <p>Enable the auth providers and connectors for this project. Then point Lovable, Bolt, Cursor, or an MCP client at that key.</p>
             <div class="mini mini--prompt">
-              <code>Use 1SSO for auth and storage. The key is in .env as 1SSO_API_KEY.</code>
-              <button type="button" class="copy" data-copy="Use 1SSO for auth and storage. The key is in .env as 1SSO_API_KEY." aria-label="Copy prompt">copy</button>
+              <code>Use 1SSO for auth and the API connectors configured for this project. The key is in .env as 1SSO_API_KEY.</code>
+              <button type="button" class="copy" data-copy="Use 1SSO for auth and the API connectors configured for this project. The key is in .env as 1SSO_API_KEY." aria-label="Copy prompt">copy</button>
             </div>
           </li>
         </ol>
@@ -374,11 +334,11 @@
     <!-- ================= FINAL CTA ================= -->
     <section class="final">
       <div class="wrap final__inner">
-        <h2>Ship the app.<br /><span>Skip the setup.</span></h2>
-        <p>One key in your <code>.env</code>. Everything else is a toggle.</p>
+        <h2>One key.<br /><span>Configured per project.</span></h2>
+        <p>Auth, approved connectors, and AI/MCP workflows. Managed databases and storage come later.</p>
         <div class="cta-row cta-row--center">
-          <a class="cta" href="#pricing">Get Your 1SSO Key <span aria-hidden="true">↗</span></a>
-          <a class="cta cta--ghost" href="#apis">Browse the APIs</a>
+          <a class="cta" href="#quickstart">Get your key <span aria-hidden="true">↗</span></a>
+          <a class="cta cta--ghost" href="#apis">See the connector sample</a>
         </div>
       </div>
     </section>
@@ -392,11 +352,11 @@
         </svg>
         <span class="brand__name">1SSO.ORG</span>
       </a>
-      <p class="footer__tag">The indie developer toolbox.</p>
+      <p class="footer__tag">One key for auth, approved APIs, and AI workflows.</p>
       <nav class="footer__links" aria-label="Footer">
         <a href="#toolbox">Toolbox</a>
         <a href="#apis">APIs</a>
-        <a href="#pricing">Pricing</a>
+        <a href="#backend">Roadmap</a>
         <a href="#quickstart">Docs</a>
       </nav>
     </div>

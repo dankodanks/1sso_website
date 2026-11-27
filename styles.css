@@ -216,6 +216,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .envcmp.is-merged .envcode--messy .ln { transition-delay: calc(var(--i) * 14ms); }
 .after__list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; font-size: 14px; color: #d9d4e4; }
 .after__list .tick { color: var(--green); margin-right: 4px; }
+.after__list .soon { color: var(--muted); margin-right: 4px; }
+.after__list em { font-style: normal; font-family: var(--font-mono); font-size: 11px; color: var(--orange); }
 .after__note { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
 
 /* ---------- HERO ART (room scene) ---------- */
@@ -312,7 +314,8 @@ body.vibe-mode .cta { animation: rainbow 3s linear infinite; }
 .feature p { color: #c9c3d8; line-height: 1.6; font-size: 15.5px; }
 .feature q { color: var(--cream); font-style: italic; }
 .feature__tag { margin-top: auto; align-self: flex-start; font-family: var(--font-mono); font-size: 11.5px; padding: 3px 10px; border-radius: 99px; color: var(--green); border: 1px solid rgba(77,255,154,.35); background: rgba(77,255,154,.06); }
-.feature__tag--addon { color: var(--orange); border-color: rgba(255,154,71,.45); background: rgba(255,154,71,.08); }
+.feature__tag--addon,
+.feature__tag--soon { color: var(--orange); border-color: rgba(255,154,71,.45); background: rgba(255,154,71,.08); }
 
 /* ---------- API DIRECTORY ---------- */
 .dir { border: 1px solid var(--line); border-radius: 14px; background: rgba(10, 10, 22, 0.55); padding: 20px; }
@@ -399,8 +402,12 @@ body.vibe-mode .cta { animation: rainbow 3s linear infinite; }
 .plan-card__badge { position: absolute; top: 18px; right: 18px; font: 500 11px var(--font-mono); color: var(--orange); border: 1px solid rgba(255,154,71,.45); padding: 2px 10px; border-radius: 99px; }
 .plan-card__name { font-family: var(--font-mono); font-size: 14px; color: var(--cream); font-weight: 700; }
 .plan-card__price .amt { font-size: clamp(42px, 5vw, 56px); font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+.plan-card__price .amt--label { font-size: clamp(32px, 4vw, 44px); letter-spacing: -0.03em; }
 .plan-card--addon .amt { color: var(--orange); font-size: clamp(34px, 4vw, 44px); }
+.plan-card--addon .amt--label { font-size: clamp(28px, 3.4vw, 36px); }
 .plan-card__price .per { color: var(--muted); font-family: var(--font-mono); font-size: 14px; }
+.plan-card__fine { color: var(--muted); font-size: 14px; line-height: 1.5; }
+.plan-card__list .soon { flex: none; color: var(--muted); font-family: var(--font-mono); }
 .plan-card__list { display: grid; gap: 10px; margin: 6px 0 14px; color: #ddd7e8; font-size: 15px; }
 .plan-card__list li { display: flex; gap: 10px; }
 .plan-card__list li .ok { flex: none; }
