@@ -54,28 +54,71 @@
      ========================================================= */
   const badgeList = $(".badges__list");
   if (badgeList) {
+    const SPEED = 34; // px per second, content moves right to left
+    let pos = 0;
+    let paused = false;
+    let resumeAt = 0;
+    let drag = null;
+
+    const maxScroll = () => Math.max(0, badgeList.scrollWidth - badgeList.clientWidth);
+    const loopDistance = () => {
+      const first = badgeList.firstElementChild;
+      const clone = badgeList.querySelector(".badge--clone");
+      if (!first || !clone) return 0;
+      return clone.offsetLeft - first.offsetLeft;
+    };
     const syncBadges = () => {
-      const max = badgeList.scrollWidth - badgeList.clientWidth;
+      const max = maxScroll();
       badgeList.classList.toggle("is-overflowing", max > 2);
       badgeList.classList.toggle("is-scrolled", badgeList.scrollLeft > 2);
       badgeList.classList.toggle("is-end", max > 2 && badgeList.scrollLeft >= max - 2);
     };
-    badgeList.addEventListener("scroll", syncBadges, { passive: true });
-    window.addEventListener("resize", syncBadges);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncBadges);
-    syncBadges();
+    const rebuildLoop = () => {
+      badgeList.querySelectorAll(".badge--clone").forEach((node) => node.remove());
+      const overflows = badgeList.scrollWidth - badgeList.clientWidth > 2;
+      if (overflows && !reduceMotion) {
+        [...badgeList.children].forEach((node) => {
+          const clone = node.cloneNode(true);
+          clone.classList.add("badge--clone");
+          clone.setAttribute("aria-hidden", "true");
+          badgeList.appendChild(clone);
+        });
+      }
+      badgeList.classList.toggle("is-looping", overflows && !reduceMotion);
+      const loop = loopDistance();
+      if (loop > 0) pos = ((pos % loop) + loop) % loop;
+      else pos = Math.min(pos, maxScroll());
+      syncBadges();
+    };
+    badgeList.addEventListener("scroll", () => {
+      syncBadges();
+      // keep the fractional position while the auto-scroll nudges by a pixel or less
+      if (Math.abs(badgeList.scrollLeft - pos) > 1.5) pos = badgeList.scrollLeft;
+    }, { passive: true });
+    window.addEventListener("resize", rebuildLoop);
+    badgeList.querySelectorAll("img").forEach((img) => {
+      if (!img.complete) img.addEventListener("load", rebuildLoop, { once: true });
+    });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(rebuildLoop);
+    rebuildLoop();
+
+    const pauseFor = (ms) => { resumeAt = performance.now() + ms; };
+    badgeList.addEventListener("mouseenter", () => { paused = true; });
+    badgeList.addEventListener("mouseleave", () => { paused = false; pauseFor(400); });
+    badgeList.addEventListener("focusin", () => { paused = true; });
+    badgeList.addEventListener("focusout", () => { paused = false; pauseFor(400); });
 
     badgeList.addEventListener("wheel", (e) => {
-      const max = badgeList.scrollWidth - badgeList.clientWidth;
+      const max = maxScroll();
       if (max <= 2 || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
       const goingNext = e.deltaY > 0 && badgeList.scrollLeft < max;
       const goingPrev = e.deltaY < 0 && badgeList.scrollLeft > 0;
       if (!goingNext && !goingPrev) return;
       badgeList.scrollLeft += e.deltaY;
+      pauseFor(1400);
       e.preventDefault();
     }, { passive: false });
 
-    let drag = null;
     badgeList.addEventListener("pointerdown", (e) => {
       if (e.pointerType === "touch" || e.button !== 0) return;
       drag = { id: e.pointerId, x: e.clientX, left: badgeList.scrollLeft };
@@ -91,9 +134,27 @@
       if (!drag || (e && e.pointerId !== drag.id)) return;
       drag = null;
       badgeList.classList.remove("is-dragging");
+      pauseFor(900);
     };
     badgeList.addEventListener("pointerup", endDrag);
     badgeList.addEventListener("pointercancel", endDrag);
+
+    if (!reduceMotion) {
+      let last = 0;
+      const tick = (now) => {
+        if (!last) last = now;
+        const dt = Math.min(40, now - last);
+        last = now;
+        const loop = loopDistance();
+        const busy = paused || drag || now < resumeAt || document.hidden;
+        if (loop > 2 && !busy) {
+          pos = (pos + (SPEED * dt) / 1000) % loop;
+          badgeList.scrollLeft = pos;
+        }
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
   }
 
   /* =========================================================
@@ -699,15 +760,153 @@
     }
   };
 
+  const bedBtn = $(".spot--bedcat");
+  const bedSays = [
+    "mrrrow~ ♥", "purrrr…", "mrrp?", "blep.", "that's the spot",
+    "again.", "*slow blink*", "the belly is a trap", "one more.", "mlem."
+  ];
+  let sayTimer = null;
+  function sayBed(line) {
+    $(".bubble", bedBtn).textContent = line;
+    bedBtn.classList.add("is-talking");
+    clearTimeout(sayTimer);
+    sayTimer = setTimeout(() => bedBtn.classList.remove("is-talking"), 1700);
+  }
+
+  let zoomGen = 0;
+  let zoomCat = null;
+  let zoomTitle = null;
+  function showZoomTitle() {
+    if (zoomTitle) zoomTitle.remove();
+    const title = document.createElement("p");
+    title.className = "zoomies-title";
+    title.setAttribute("aria-hidden", "true");
+    title.textContent = "3AM ZOOMIES";
+    scene.appendChild(title);
+    zoomTitle = title;
+  }
+  function clearZoomTitle() {
+    if (!zoomTitle) return;
+    zoomTitle.remove();
+    zoomTitle = null;
+  }
+  function zoomies(msg) {
+    const gen = ++zoomGen;
+    if (zoomCat) { zoomCat.remove(); zoomCat = null; }
+    toast(msg, 3200);
+    sayBed("3AM ZOOMIES");
+    showZoomTitle();
+    scene.classList.add("zoomies");
+    meow(rand(1.35, 1.7));
+    skitter();
+
+    if (reduceMotion) {
+      burst(["🐾", "💨", "🐱"], spots.bedcat.x, spots.bedcat.y, 12);
+      setTimeout(() => {
+        if (gen !== zoomGen) return;
+        scene.classList.remove("zoomies");
+        clearZoomTitle();
+        sayBed("mrrrow~ ♥");
+      }, 700);
+      return;
+    }
+
+    const path = [
+      [76, 42], [66, 50], [72, 70], [56, 84], [36, 90], [14, 86],
+      [22, 70], [40, 62], [46, 52], [30, 56], [16, 48], [34, 36],
+      [54, 24], [74, 18], [88, 24], [86, 38], [74, 44], [58, 64],
+      [42, 86], [18, 82], [32, 68], [58, 56], [76, 42]
+    ];
+    const route = path;
+    const cat = document.createElement("span");
+    cat.className = "zoomie";
+    cat.setAttribute("aria-hidden", "true");
+    cat.innerHTML = '<i class="zoomie__streak"></i><span class="zoomie__cat">🐱</span>';
+    cat.style.left = path[0][0] + "%";
+    cat.style.top = path[0][1] + "%";
+    cat.style.transition = "none";
+    scene.appendChild(cat);
+    zoomCat = cat;
+    cat.offsetWidth;
+    cat.style.transition = "";
+
+    let i = 1;
+    function hop() {
+      if (gen !== zoomGen) return;
+      if (i >= route.length) {
+        cat.remove();
+        if (zoomCat === cat) zoomCat = null;
+        scene.classList.remove("zoomies");
+        clearZoomTitle();
+        sayBed("mrrrow~ ♥");
+        return;
+      }
+      const [x, y] = route[i];
+      const prev = route[i - 1];
+      const ms = 70;
+      cat.style.transitionDuration = ms + "ms";
+      cat.style.left = x + "%";
+      cat.style.top = y + "%";
+      cat.classList.toggle("is-left", x < prev[0] - 0.5);
+      if (i % 2 === 0) {
+        const mark = document.createElement("span");
+        mark.className = "paw";
+        mark.textContent = "🐾";
+        mark.style.left = prev[0] + "%";
+        mark.style.top = (prev[1] + 3) + "%";
+        mark.style.setProperty("--rot", rand(-50, 50) + "deg");
+        scene.appendChild(mark);
+        setTimeout(() => mark.remove(), 1000);
+      }
+      if (i % 4 === 0) meow(rand(1.25, 1.85));
+      if (i % 5 === 0) fx("💨", x, y, { dy: 20, dur: 0.6 });
+      i++;
+      setTimeout(hop, ms);
+    }
+    hop();
+  }
+
+  function skitter() {
+    const a = audio(); if (!a) return;
+    const buf = noiseBuffer(a);
+    const t = a.currentTime;
+    for (let i = 0; i < 8; i++) {
+      const n = a.createBufferSource(), g = a.createGain(), hp = a.createBiquadFilter();
+      n.buffer = buf;
+      hp.type = "highpass"; hp.frequency.value = 2400;
+      const when = t + i * 0.055;
+      g.gain.setValueAtTime(0.07, when);
+      g.gain.exponentialRampToValueAtTime(0.0001, when + 0.035);
+      n.connect(hp).connect(g).connect(a.destination);
+      n.start(when); n.stop(when + 0.04);
+    }
+  }
+
   const click = {
     bedcat() {
       state.pets++;
       meow(rand(0.9, 1.15));
       burst(["♥", "💖", "🐾"], spots.bedcat.x, spots.bedcat.y, 7);
+
+      const fifth = state.pets % 5 === 0;
+      const surprise = !fifth && state.pets > 2 && state.pets !== 7 && Math.random() < 0.22;
+      if (fifth || surprise) {
+        const msg = state.pets === 15
+          ? "ok that's enough pets. (she disagrees — zoomies.)"
+          : state.pets % 10 === 0
+            ? `${state.pets} pets. she has the 3am zoomies.`
+            : "3:00am. she has the zoomies.";
+        zoomies(msg);
+        return;
+      }
+
+      if (Math.random() < 0.5) {
+        const line = pick(bedSays);
+        sayBed(line);
+        if (state.pets !== 1 && state.pets !== 7) toast(line);
+      }
       if (state.pets === 1) toast("purrrr… she likes you");
       else if (state.pets === 7) { toast("🐾 the cat council approves of you"); scene.classList.add("wiggle"); setTimeout(() => scene.classList.remove("wiggle"), 600); }
-      else if (state.pets === 15) toast("ok that's enough pets. (it is not.)");
-      else if (state.pets % 10 === 0) toast(`${state.pets} pets delivered`);
     },
     floorcat() {
       state.floorPokes++;
