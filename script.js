@@ -50,6 +50,53 @@
   });
 
   /* =========================================================
+     "works with" row — scroll when the chips overflow
+     ========================================================= */
+  const badgeList = $(".badges__list");
+  if (badgeList) {
+    const syncBadges = () => {
+      const max = badgeList.scrollWidth - badgeList.clientWidth;
+      badgeList.classList.toggle("is-overflowing", max > 2);
+      badgeList.classList.toggle("is-scrolled", badgeList.scrollLeft > 2);
+      badgeList.classList.toggle("is-end", max > 2 && badgeList.scrollLeft >= max - 2);
+    };
+    badgeList.addEventListener("scroll", syncBadges, { passive: true });
+    window.addEventListener("resize", syncBadges);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncBadges);
+    syncBadges();
+
+    badgeList.addEventListener("wheel", (e) => {
+      const max = badgeList.scrollWidth - badgeList.clientWidth;
+      if (max <= 2 || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      const goingNext = e.deltaY > 0 && badgeList.scrollLeft < max;
+      const goingPrev = e.deltaY < 0 && badgeList.scrollLeft > 0;
+      if (!goingNext && !goingPrev) return;
+      badgeList.scrollLeft += e.deltaY;
+      e.preventDefault();
+    }, { passive: false });
+
+    let drag = null;
+    badgeList.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "touch" || e.button !== 0) return;
+      drag = { id: e.pointerId, x: e.clientX, left: badgeList.scrollLeft };
+      badgeList.setPointerCapture(e.pointerId);
+    });
+    badgeList.addEventListener("pointermove", (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const dx = e.clientX - drag.x;
+      if (Math.abs(dx) > 3) badgeList.classList.add("is-dragging");
+      badgeList.scrollLeft = drag.left - dx;
+    });
+    const endDrag = (e) => {
+      if (!drag || (e && e.pointerId !== drag.id)) return;
+      drag = null;
+      badgeList.classList.remove("is-dragging");
+    };
+    badgeList.addEventListener("pointerup", endDrag);
+    badgeList.addEventListener("pointercancel", endDrag);
+  }
+
+  /* =========================================================
      Hero: messy .env -> one line
      ========================================================= */
   const messy = [
